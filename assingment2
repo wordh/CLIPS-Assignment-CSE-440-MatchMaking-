@@ -1,0 +1,429 @@
+         CLIPS (6.30 3/17/15)
+CLIPS> (deftemplate person 
+(slot nich_name)
+(slot age)
+(slot gender)
+(slot hair)
+(slot eyes)
+(slot occupation)
+(slot hobbies)
+(slot personality)
+(slot income))
+CLIPS> (assert(person(nick_name Wordh)
+(age 21)
+(gender male)
+(hair black)
+(eyes black)
+(occupation engineer)
+(personality calm)
+(income 4)))
+
+[TMPLTDEF1] Invalid slot nick_name not defined in corresponding deftemplate person.
+CLIPS> (deftemplate person 
+(slot nick_name)
+(slot age)
+(slot gender)
+(slot hair)
+(slot eyes)
+(slot occupation)
+(slot hobbies)
+(slot personality)
+(slot income))
+CLIPS> (assert(person(nick_name Wordh)
+(age 21)
+(gender male)
+(hair black)
+(eyes black)
+(occupation engineer)
+(personality calm)
+(income 4)))
+<Fact-1>
+CLIPS> (assert(person(nick_name Kimia)
+(age 20)
+(gender female)
+(hair brown)
+(eyes hazel)
+(occupation engineer)
+(personality calm)
+(income 4)))
+<Fact-2>
+CLIPS> (assert(person(nick_name Shovon)
+(age 20)
+(gender male)
+(hair black)
+(eyes black)
+(occupation engineer)
+(personality relaxed)
+(income 4)))
+<Fact-3>
+CLIPS> (assert(person(nick_name Mashnoon)
+(age 20)
+(gender male)
+(hair black)
+(eyes black)
+(occupation engineer)
+(personality relaxed)
+(income 5)))
+<Fact-4>
+CLIPS> (assert(person(nick_name Hasib)
+(age 24)
+(gender male)
+(hair black)
+(eyes black)
+(occupation engineer)
+(personality relaxed)
+(income 5)))
+<Fact-5>
+CLIPS> (assert(person(nick_name Fatin)
+(age 30)
+(gender male)
+(hair black)
+(eyes black)
+(occupation businessman)
+(personality relaxed)
+(income 6)))
+<Fact-6>
+CLIPS> (assert(person(nick_name Lamcy)
+(age 20)
+(gender female)
+(hair blond)
+(eyes black)
+(occupation student)
+(personality relaxed)
+(income 1)))
+<Fact-7>
+CLIPS> (assert(person(nick_name Zannatul)
+(age 19)
+(gender female)
+(hair golden)
+(eyes black)
+(occupation student)
+(personality hyper)
+(income 1)))
+<Fact-8>
+CLIPS> (assert(person(nick_name Dia)
+(age 21)
+(gender female)
+(hair black)
+(eyes black)
+(occupation engineer)
+(personality hyper)
+(income 4)))
+<Fact-9>
+CLIPS> (assert(person(nick_name Spondon)
+(age 21)
+(gender female)
+(hair Blue)
+(eyes Hazel)
+(occupation dancer)
+(personality calm)
+(income 4)))
+<Fact-10>
+CLIPS> (assert(person(nick_name akta_meye)
+(age 21)
+(gender female)
+(hair blond)
+(eyes black)
+(occupation doctor)
+(personality booring)
+(income 4)))
+<Fact-11>
+CLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+=>
+(printout t ?fname  " is female with Blond hair and eyes " ?feye ?fage ?foccupation ?fpersonality ?fincome crlf))
+CLIPS> (run)
+akta_meye is female with Blond hair and eyes black21doctorbooring4
+Lamcy is female with Blond hair and eyes black20studentrelaxed1
+CLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income ?income>5)(nick_name ?Mname))
+=>
+(printout t ?fname  " is female with Blond hair and eyes " ?feye ?fage ?foccupation ?fpersonality ?fincome crlf  ?Mname))
+CLIPS> (run)
+akta_meye is female with Blond hair and eyes black21doctorbooring4
+Fatinakta_meye is female with Blond hair and eyes black21doctorbooring4
+Hasibakta_meye is female with Blond hair and eyes black21doctorbooring4
+Mashnoonakta_meye is female with Blond hair and eyes black21doctorbooring4
+Shovonakta_meye is female with Blond hair and eyes black21doctorbooring4
+WordhLamcy is female with Blond hair and eyes black20studentrelaxed1
+FatinLamcy is female with Blond hair and eyes black20studentrelaxed1
+HasibLamcy is female with Blond hair and eyes black20studentrelaxed1
+MashnoonLamcy is female with Blond hair and eyes black20studentrelaxed1
+ShovonLamcy is female with Blond hair and eyes black20studentrelaxed1
+WordhCLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income <5>+)(nick_name ?Mname))
+=>
+(printout t ?fname  " is female with Blond hair and eyes " ?feye ?fage ?foccupation ?fpersonality ?fincome crlf  ?Mname))
+CLIPS> (run)
+CLIPS> (run)
+CLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income <5>+)(nick_name ?Mname))
+=>
+(printout t ?fname  " is female with Blond hair and eyes " ?feye ?fage ?foccupation ?fpersonality ?fincome crlf  ?Mname))
+CLIPS> (run)
+CLIPS> (deftemplate person2 
+(slot nick_name)
+(slot age  (range 18 40))
+(slot gender (allowed-values male female))
+(slot hair (allowed-values blond brown black red))
+(slot eyes (allowed-values brown black blue green))
+(slot occupation)
+(slot hobbies)
+(slot personality (allowed-values relaxed calm boring hyper))
+(slot income (range 1 10)))
+CLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income 5+)(nick_name ?Mname))
+=>
+(printout t ?fname  " is female with Blond hair and eyes " ?feye ?fage ?foccupation ?fpersonality ?fincome crlf  ?Mname))
+CLIPS> (run)
+CLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income 5)(nick_name ?Mname))
+=>
+(printout t ?fname  " is female with Blond hair and eyes " ?feye ?fage ?foccupation ?fpersonality ?fincome crlf  ?Mname))
+CLIPS> (run)
+akta_meye is female with Blond hair and eyes black21doctorbooring4
+Hasibakta_meye is female with Blond hair and eyes black21doctorbooring4
+MashnoonLamcy is female with Blond hair and eyes black20studentrelaxed1
+HasibLamcy is female with Blond hair and eyes black20studentrelaxed1
+MashnoonCLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income 5)(nick_name ?Mname))
+=>
+(printout t " "?fname  " is female with Blond hair and eyes " ?feye " " ?fage" " ?foccupation" " ?fpersonality" " ?fincome" " "Matches with " crlf  ?Mname))
+CLIPS> (run)
+ akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Hasib akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Mashnoon Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+Hasib Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+MashnoonCLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income 6 AND 10)(nick_name ?Mname))
+=>
+(printout t " "?fname  " is female with Blond hair and eyes " ?feye " " ?fage" " ?foccupation" " ?fpersonality" " ?fincome" " "Matches with " crlf  ?Mname))
+
+[PRNTUTIL2] Syntax Error:  Check appropriate syntax for deftemplate patterns.
+
+ERROR:
+(defrule MAIN::Simple-search
+   (person (nick_name ?fname) (hair blond) (gender female) (age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+   (person (gender male) (income 6 AND
+CLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income ?mincome)(nick_name ?Mname)(>= ?mincome 6))
+=>
+(printout t " "?fname  " is female with Blond hair and eyes " ?feye " " ?fage" " ?foccupation" " ?fpersonality" " ?fincome" " "Matches with " crlf  ?Mname))
+
+[TMPLTDEF1] Invalid slot >= not defined in corresponding deftemplate person.
+
+ERROR:
+(defrule MAIN::Simple-search
+   (person (nick_name ?fname) (hair blond) (gender female) (age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+   (person (gender male) (income ?mincome) (nick_name ?Mname) (>=
+CLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income ?mincome)(nick_name ?Mname)(test(>= ?mincome 6)))
+=>
+(printout t " "?fname  " is female with Blond hair and eyes " ?feye " " ?fage" " ?foccupation" " ?fpersonality" " ?fincome" " "Matches with " crlf  ?Mname))
+
+[TMPLTDEF1] Invalid slot test not defined in corresponding deftemplate person.
+
+ERROR:
+(defrule MAIN::Simple-search
+   (person (nick_name ?fname) (hair blond) (gender female) (age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+   (person (gender male) (income ?mincome) (nick_name ?Mname) (test
+CLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income ?mincome)(nick_name ?Mname) (>= ?mincome 6))
+=>
+(printout t " "?fname  " is female with Blond hair and eyes " ?feye " " ?fage" " ?foccupation" " ?fpersonality" " ?fincome" " "Matches with " crlf  ?Mname))
+
+[TMPLTDEF1] Invalid slot >= not defined in corresponding deftemplate person.
+
+ERROR:
+(defrule MAIN::Simple-search
+   (person (nick_name ?fname) (hair blond) (gender female) (age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+   (person (gender male) (income ?mincome) (nick_name ?Mname) (>=
+CLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income ?mincome)(nick_name ?Mname))
+(>= ?mincome 6)
+=>
+(printout t " "?fname  " is female with Blond hair and eyes " ?feye " " ?fage" " ?foccupation" " ?fpersonality" " ?fincome" " "Matches with " crlf  ?Mname))
+CLIPS> (run)
+CLIPS> (assert(person(nick_name Wordh)
+(age 21)
+(gender male)
+(hair black)
+(eyes black)
+(occupation engineer)
+(personality calm)
+(income 7)))
+<Fact-12>
+CLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income ?mincome)(nick_name ?Mname))
+(>= ?mincome 6)
+=>
+(printout t " "?fname  " is female with Blond hair and eyes " ?feye " " ?fage" " ?foccupation" " ?fpersonality" " ?fincome" " "Matches with " crlf  ?Mname))
+CLIPS> (run)
+CLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income ?mincome)(nick_name ?Mname))
+(>= ?mincome 6 6)
+=>
+(printout t " "?fname  " is female with Blond hair and eyes " ?feye " " ?fage" " ?foccupation" " ?fpersonality" " ?fincome" " "Matches with " crlf  ?Mname))
+CLIPS> (run)
+CLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income ?mincome)(nick_name ?Mname))
+=>
+(printout t " "?fname  " is female with Blond hair and eyes " ?feye " " ?fage" " ?foccupation" " ?fpersonality" " ?fincome" " "Matches with " crlf  ?Mname))
+CLIPS> (run)
+ Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+Wordh akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Wordh akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Fatin akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Hasib akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Mashnoon akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Shovon akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Wordh Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+Fatin Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+Hasib Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+Mashnoon Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+Shovon Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+WordhCLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income ?mincome>5)(nick_name ?Mname))
+=>
+(printout t " "?fname  " is female with Blond hair and eyes " ?feye " " ?fage" " ?foccupation" " ?fpersonality" " ?fincome" " "Matches with " crlf  ?Mname))
+CLIPS> (run)
+ Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+Wordh akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Wordh akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Fatin akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Hasib akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Mashnoon akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Shovon akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Wordh Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+Fatin Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+Hasib Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+Mashnoon Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+Shovon Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+WordhCLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income ?mincome)(nick_name ?Mname))(>=?mincome 6)
+=>
+(printout t " "?fname  " is female with Blond hair and eyes " ?feye " " ?fage" " ?foccupation" " ?fpersonality" " ?fincome" " "Matches with " crlf  ?Mname))
+CLIPS> (run)
+CLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income ?mincome)(nick_name ?Mname))
+(test(>=?mincome 6))
+=>
+(printout t " "?fname  " is female with Blond hair and eyes " ?feye " " ?fage" " ?foccupation" " ?fpersonality" " ?fincome" " "Matches with " crlf  ?Mname))
+
+[EXPRNPSR3] Missing function declaration for >=?mincome.
+
+ERROR:
+(defrule MAIN::Simple-search
+   (person (nick_name ?fname) (hair blond) (gender female) (age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+   (person (gender male) (income ?mincome) (nick_name ?Mname))
+   (test (>=?mincome
+CLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income ?mincome)(nick_name ?Mname))
+(test(person(>=?mincome 6)))
+=>
+(printout t " "?fname  " is female with Blond hair and eyes " ?feye " " ?fage" " ?foccupation" " ?fpersonality" " ?fincome" " "Matches with " crlf  ?Mname))
+
+[EXPRNPSR3] Missing function declaration for person.
+
+ERROR:
+(defrule MAIN::Simple-search
+   (person (nick_name ?fname) (hair blond) (gender female) (age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+   (person (gender male) (income ?mincome) (nick_name ?Mname))
+   (test (person
+CLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income 6&7)(nick_name ?Mname))
+=>
+(printout t " "?fname  " is female with Blond hair and eyes " ?feye " " ?fage" " ?foccupation" " ?fpersonality" " ?fincome" " "Matches with " crlf  ?Mname))
+
+[RULECSTR1] Pattern #2 slot income
+has constraint conflicts which make the pattern unmatchable.
+
+ERROR:
+(defrule MAIN::Simple-search
+   (person (nick_name ?fname) (hair blond) (gender female) (age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+   (person (gender male) (income 6&7) (nick_name ?Mname))
+   =>
+   (printout t " " ?fname " is female with Blond hair and eyes " ?feye " " ?fage " " ?foccupation " " ?fpersonality " " ?fincome " " "Matches with " crlf ?Mname))
+CLIPS> (defrule Simple-search
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male) (income 6|7)(nick_name ?Mname))
+=>
+(printout t " "?fname  " is female with Blond hair and eyes " ?feye " " ?fage" " ?foccupation" " ?fpersonality" " ?fincome" " "Matches with " crlf  ?Mname))
+CLIPS> (run)(
+ Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+Wordh akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Wordh akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Fatin Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+FatinCLIPS> (defrule Gender
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male)(nick_name ?Mname))
+=>
+(printout t " "?fname  " is female with Blond hair and eyes " ?feye " " ?fage" " ?foccupation" " ?fpersonality" " ?fincome" " "Matches with " crlf  ?Mname))
+CLIPS> (run)
+ akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Wordh Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+Wordh akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Fatin Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+Fatin akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Hasib Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+Hasib akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Mashnoon Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+Mashnoon akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Shovon Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+Shovon akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with 
+Wordh Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with 
+WordhCLIPS> (defrule Gender
+(person(nick_name ?fname) (hair blond) (gender female)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+(person(gender male)(nick_name ?Mname))
+=>
+(printout t " "?fname  " is female with Blond hair and eyes " ?feye " " ?fage" " ?foccupation" " ?fpersonality" " ?fincome" " "Matches with "   ?Mname crlf))
+CLIPS> (run)
+ akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with Wordh
+ Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with Wordh
+ akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with Fatin
+ Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with Fatin
+ akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with Hasib
+ Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with Hasib
+ akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with Mashnoon
+ Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with Mashnoon
+ akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with Shovon
+ Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with Shovon
+ akta_meye is female with Blond hair and eyes black 21 doctor booring 4 Matches with Wordh
+ Lamcy is female with Blond hair and eyes black 20 student relaxed 1 Matches with Wordh
+CLIPS> (defrule Client
+(person(nick_name ?fname) (hair ?hair) (gender ?gender)(age ?fage) (eyes ?feye) (occupation ?foccupation) (personality ?fpersonality) (income ?fincome))
+=>
+(printout t " "?fname  " is  with " ?hair " hair and eyes " ?feye " " ?fage" " ?foccupation" " ?fpersonality" " ?fincome" " "Matches with You " crlf))
+(assert (gender (read))))CLIPS> (run)
+ Wordh is  with black hair and eyes black 21 engineer calm 7 Matches with You 
+ akta_meye is  with blond hair and eyes black 21 doctor booring 4 Matches with You 
+ Spondon is  with Blue hair and eyes Hazel 21 dancer calm 4 Matches with You 
+ Dia is  with black hair and eyes black 21 engineer hyper 4 Matches with You 
+ Zannatul is  with golden hair and eyes black 19 student hyper 1 Matches with You 
+ Lamcy is  with blond hair and eyes black 20 student relaxed 1 Matches with You 
+ Fatin is  with black hair and eyes black 30 businessman relaxed 6 Matches with You 
+ Hasib is  with black hair and eyes black 24 engineer relaxed 5 Matches with You 
+ Mashnoon is  with black hair and eyes black 20 engineer relaxed 5 Matches with You 
+ Shovon is  with black hair and eyes black 20 engineer relaxed 4 Matches with You 
+ Kimia is  with brown hair and eyes hazel 20 engineer calm 4 Matches with You 
+ Wordh is  with black hair and eyes black 21 engineer calm 4 Matches with You 
+CLIPS> 
